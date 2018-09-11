@@ -1,0 +1,86 @@
+{
+  "length_10": [
+    {
+      "id": 1,
+      "title": "5 sec read"
+    }
+  ],
+  "length_15": [
+    {
+      "id": 1,
+      "title": "10 sec read"
+    }
+  ],
+  "length_20": [
+    {
+      "id": 1,
+      "title": "15 sec read"
+    }
+  ],
+  "badWords":[
+   {
+    "rips": "name",
+    "suck": "name",
+    "sucks": "name",
+    "sucking": "name",
+    "sucked": "name",
+    "kill":   "name",
+    "killed":   "name",
+    "shot": "name",
+    "crap": "name" ,
+    "blood":"name" ,
+    "bleeding": "name" ,
+    "balls" : "name" ,
+    "orphans": "name",
+    "erection" : "name" ,
+    "screw": "name" ,
+    "screwing" : "name" ,
+    "mortal" : "name",
+    "naked" : "name",
+    "bomb" : "name",
+    "bombs" : "name" ,
+    "nuclear" : "name",
+    "terrorist" : "name",
+    "terrorists" : "name",
+    "fart" : "name",
+    "sleep" : "name",
+    "bitch" : "name",
+    "dead" : "name",
+    "shit" : "name",
+    "shits" : "name",
+     "urinals" : "name",
+    "urinal" : "name",
+    "hole" : "name",
+    "nude" : "name",
+    "slept" : "name"
+  }
+  ],
+  "veryBadWords": 
+  [{
+    "fucking": "name",
+    "fucker": "name",
+    "fucked": "name",
+    "fucks": "name",
+    "fuck": "name",
+    "whore": "name",
+    "whores": "name",
+    "bitch": "name",
+    "ass" : "name",
+    "orgasm" : "name" ,
+    "cum" : "name" ,
+    "cums" : "name" ,
+    "penis" : "name",
+    "penetrates" : "name",
+    "sex" : "name",
+     "sluts" : "name",
+      "dick" : "name",
+      "dicks" : "name",
+      "pussy" : "name",
+     "slut" : "name" 
+  }
+  ]
+
+}
+
+  
+  

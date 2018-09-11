@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Chuck's Jokes</title>
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+	<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+	<div class="greet">Welcome to Chuck's Jokes ! <br></div>
+	<div class="chuck-avatar"><img class="chuck-avatar" id="chuckAv" alt="chuck-avatar"></div>
+	<div class="wrapper">
+	<span class="time"></span>
+		<div id="output"></div>
+			
+		<input type="button" id="btn" value="Get a joke"/>
+		<span class="age"> <img id="ageApp" alt="age-res-icon"/> </span>
+		
+	
+	</div>
+
+	
+	<script>
+
+// Button event handler 
+	let btn = document.getElementById('btn').addEventListener('click' , function(){
+		getJoke('https://api.chucknorris.io/jokes/random' , "GET");
+	});
+
+
+
+// func getJoke acts like a motherboard for the functionallity of the application , invoking the other functions
+
+	 function getJoke (url , method){
+		 fetch(url)
+		.then(response => response.json())
+		.then(data => {
+			let joke = data.value;
+			jokeAppropriate(joke);
+			jokeLength(joke);
+			renderJoke(joke);
+		})
+		.catch(err => console.log(err))
+	}
+
+
+	// function for age appropriate image
+	function changeAge(img) {
+        document.getElementById('ageApp').src=img;
+      
+    } 
+    changeAge( "src/no-age.png");
+
+
+
+    // function for changing the avatar of chuck , according to the database output
+    function changeAvatar(img){
+    	document.getElementById('chuckAv').src=img;
+    }
+    changeAvatar('src/chuck-bad.png');
+
+
+
+// async func that catches the results of other functions and desides what type of content to output
+	async function jokeAppropriate(input){
+				let badWord = await badFunc(input);
+			 	let veryBadWord = await veryBadFunc(input);
+			 	let readLength = await jokeLength(input);
+			 	if (badWord && veryBadWord) {
+			 		changeAge('src/age-18.png');
+			 		changeAvatar('src/chuck-blush.png');
+			 	}
+			 	if(badWord){
+			 		changeAge('src/age-16.png');
+			 		changeAvatar('src/chuck-blink.png');
+			 	}
+			 	if (veryBadWord){
+			 		changeAge('src/age-18.png');
+			 		changeAvatar('src/chuck-blush.png');
+			 	}
+			 	if(veryBadWord == undefined && badWord == undefined){
+			 		changeAge("src/age-12.png");
+			 		changeAvatar('src/chuck-bad.png');
+			 	}
+
+			}
+
+
+			
+// Fetching bad words from database
+
+// Async implementation
+
+	async function badFunc(input){
+		let cleanInput = input.replace(/[^\w\s]/gi, '');
+		let lowerInput = cleanInput.toLowerCase();
+		let response;
+		let outcomeBool;
+		let badWord = await fetch('http://localhost:3000/badWords');
+			if (badWord.status == 200) {
+				response = await badWord.json();
+				Object.keys(response[0]).forEach(function(keys){
+			 		let pattern = new RegExp("(<=\\s|\\b)"+ keys +"(?=[]\\b|\\s|$)");
+			 		// pattern.test(input);
+			 		if (pattern.test(lowerInput)) {
+			 			return outcomeBool = true;
+			 		}
+				})
+			}
+			else{
+				throw new Error(badWord.status)
+			}
+			return outcomeBool;
+}
+
+
+
+
+
+// Fetching Very Bad Words
+// Async implementation
+	async function veryBadFunc(input){
+		let cleanInput = input.replace(/[^\w\s]/gi, '');
+		let lowerInput = cleanInput.toLowerCase();
+		let response;
+		let outcomeBool;
+		let veryBadWord = await fetch('http://localhost:3000/veryBadWords');
+			if (veryBadWord.status == 200) {
+				response = await veryBadWord.json();
+				Object.keys(response[0]).forEach(function(keys){
+			 		let pattern = new RegExp("(<=\\s|\\b)"+ keys +"(?=[]\\b|\\s|$)");
+			 		if (pattern.test(lowerInput)) {
+			 			return outcomeBool = true;
+			 		}
+				})
+			}
+			else{
+				throw new Error(veryBadWord.status)
+			}
+			return outcomeBool;
+}
+
+
+
+
+
+// Reaching out to the database 
+	async function jokeLength(input) {
+		let read_10 = 'http://localhost:3000/length_10';
+		let read_15 = 'http://localhost:3000/length_15';
+		let read_20 = 'http://localhost:3000/length_20';
+		let returnVal;
+		let textOutput = document.querySelector(".time");
+		let jokeLength = input.length;
+
+		if (jokeLength <= 100) {
+			returnVal = await fire5(read_10 , "GET");
+		
+			return textOutput.innerHTML = returnVal;
+		}
+		if (jokeLength > 100 && jokeLength <= 160) {
+			returnVal = await fire5(read_15 , "GET");
+	
+			return textOutput.innerHTML = returnVal;
+		}
+		if (jokeLength > 160) {
+			returnVal = await fire5(read_15 , "GET");
+			
+			return textOutput.innerHTML = returnVal;
+		}
+
+
+		return textOutput.innerHTML = returnVal
+	}
+
+
+// function that reach out for the database for the read length
+		async function fire5(url , method){
+			let response = await fetch(url);
+			data = await response.json();
+			return data[0].title;
+		}
+
+// function that renders the joke from the api
+		function renderJoke(input){
+			setTimeout(function(){				
+				let htmlOutput = document.getElementById('output');
+				htmlOutput.innerHTML = input;
+			},500)
+
+		}
+
+
+	</script>
+</body>
+</html>
