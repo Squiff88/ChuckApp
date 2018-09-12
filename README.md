@@ -16,7 +16,4 @@ This is done in 2 simple commands in your git bash or terminal
 
 - $ json-server db.json // Create and run the database
 
-With these simple steps now you can run the ChuckApp with its all features.
-
-Enjoy
-
+With these simple steps now you can run the ChuckApp.
