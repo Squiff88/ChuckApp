@@ -1,5 +1,4 @@
-# ChuckApp using Async / await functions an REST API to make request and
-retrieve data from the server
+# ChuckApp using Async / await functions an REST API to make request and retrieve data from the server
 
 This Desktop App is based on free API for Chuck Norris Jokes Database
 
